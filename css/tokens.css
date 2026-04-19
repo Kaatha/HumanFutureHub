@@ -1,0 +1,148 @@
+/* =========================================================================
+   Human Future Hub — Design Tokens
+   ========================================================================= */
+
+@font-face {
+  font-family: 'League Spartan';
+  src: url('../fonts/LeagueSpartan-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  src: url('../fonts/PublicSans-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  src: url('../fonts/PublicSans-Italic-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Brand colours */
+  --hfh-blue:        #1B4A9B;
+  --hfh-teal:        #52CBBE;
+  --hfh-orange:      #FF6D4D;
+  --hfh-purple:      #5E17EB;
+
+  /* Brand tints */
+  --hfh-blue-900:    #0F2E63;
+  --hfh-blue-700:    #1B4A9B;
+  --hfh-blue-500:    #3A6FC2;
+  --hfh-blue-200:    #C5D5EE;
+  --hfh-blue-50:     #EEF3FB;
+
+  --hfh-teal-700:    #2DA094;
+  --hfh-teal-500:    #52CBBE;
+  --hfh-teal-200:    #BEEAE5;
+  --hfh-teal-50:     #ECF9F7;
+
+  --hfh-orange-700:  #E04A28;
+  --hfh-orange-500:  #FF6D4D;
+  --hfh-orange-200:  #FFD2C5;
+  --hfh-orange-50:   #FFF1ED;
+
+  --hfh-purple-500:  #5E17EB;
+  --hfh-purple-50:   #EFE7FE;
+
+  /* Neutrals */
+  --ink:             #0B1420;
+  --ink-2:           #2A3647;
+  --ink-3:           #5A6778;
+  --ink-4:           #8A94A4;
+  --line:            #E3E7EE;
+  --line-strong:     #C8CFDB;
+  --surface:         #FFFFFF;
+  --surface-2:       #F7F8FB;
+  --surface-3:       #EEF1F6;
+  --overlay:         rgba(11,20,32,0.55);
+
+  /* Semantic roles */
+  --fg-1:            var(--ink);
+  --fg-2:            var(--ink-2);
+  --fg-3:            var(--ink-3);
+  --fg-on-brand:     #FFFFFF;
+  --bg-1:            var(--surface);
+  --bg-2:            var(--surface-2);
+  --bg-brand:        var(--hfh-blue);
+  --bg-brand-soft:   var(--hfh-blue-50);
+  --accent:          var(--hfh-orange);
+  --accent-soft:     var(--hfh-orange-50);
+  --support:         var(--hfh-teal);
+  --support-soft:    var(--hfh-teal-50);
+  --border:          var(--line);
+  --border-strong:   var(--line-strong);
+  --focus-ring:      color-mix(in oklab, var(--hfh-blue) 45%, transparent);
+
+  /* Typography */
+  --font-display:    'League Spartan', 'Arial Black', Arial, sans-serif;
+  --font-body:       'Public Sans', Arial, 'Helvetica Neue', sans-serif;
+  --font-doc:        'Inter', Arial, 'Helvetica Neue', sans-serif;
+  --font-mono:       ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+
+  /* Type scale */
+  --fs-12:  0.75rem;
+  --fs-14:  0.875rem;
+  --fs-16:  1rem;
+  --fs-18:  1.125rem;
+  --fs-20:  1.25rem;
+  --fs-24:  1.5rem;
+  --fs-32:  2rem;
+  --fs-44:  2.75rem;
+  --fs-60:  3.75rem;
+  --fs-88:  5.5rem;
+
+  --lh-tight:   1.02;
+  --lh-snug:    1.15;
+  --lh-body:    1.5;
+  --lh-loose:   1.65;
+
+  --tracking-display:  -0.02em;
+  --tracking-heading:  -0.01em;
+  --tracking-body:      0em;
+  --tracking-label:     0.08em;
+
+  /* Spacing (4pt base) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* Radii */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
+  --radius-pill: 999px;
+  --radius-petal: 62% 38% 56% 44% / 54% 48% 52% 46%;
+
+  /* Shadows */
+  --shadow-1: 0 1px 2px rgba(15,46,99,0.06), 0 1px 1px rgba(15,46,99,0.04);
+  --shadow-2: 0 4px 12px rgba(15,46,99,0.08), 0 1px 2px rgba(15,46,99,0.04);
+  --shadow-3: 0 12px 32px rgba(15,46,99,0.12), 0 2px 4px rgba(15,46,99,0.04);
+  --shadow-focus: 0 0 0 3px var(--focus-ring);
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:  120ms;
+  --dur-base:  200ms;
+  --dur-slow:  360ms;
+}

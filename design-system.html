@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>HFH Design System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/tokens.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ---- Layout ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      background: var(--surface-2);
+      color: var(--fg-1);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ---- Sidebar ---- */
+    .sidebar {
+      width: 224px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--hfh-blue-900);
+      padding: 28px 0 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .sidebar__brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 20px;
+      text-decoration: none;
+    }
+    .sidebar__brand img { width: 28px; height: 28px; object-fit: contain; }
+    .sidebar__brand-text {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 13px;
+      color: #fff;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .sidebar__group { padding: 0 12px; margin-bottom: 4px; }
+    .sidebar__group-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--hfh-teal);
+      padding: 12px 8px 4px;
+    }
+    .sidebar__link {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      padding: 6px 8px;
+      border-radius: var(--radius-xs);
+      transition: color 140ms var(--ease-out), background 140ms var(--ease-out);
+      line-height: 1.3;
+    }
+    .sidebar__link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .sidebar__link.is-active { color: #fff; background: rgba(255,255,255,0.12); }
+
+    /* ---- Main ---- */
+    .main {
+      flex: 1;
+      min-width: 0;
+      padding: 56px 64px 120px;
+      max-width: 1100px;
+    }
+
+    /* ---- Section framing ---- */
+    .ds-section {
+      margin-bottom: 80px;
+      scroll-margin-top: 32px;
+    }
+    .ds-section__eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--hfh-orange);
+      margin-bottom: 6px;
+    }
+    .ds-section__title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--hfh-blue);
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+      line-height: 1.1;
+    }
+    .ds-section__desc {
+      font-size: 14px;
+      color: var(--fg-3);
+      margin-bottom: 24px;
+      max-width: 640px;
+      line-height: 1.6;
+    }
+    .ds-divider {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 48px 0;
+    }
+
+    /* ---- Specimen tile (generic wrapper) ---- */
+    .specimen {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .specimen__body {
+      padding: 28px 32px;
+    }
+    .specimen__body--alt { background: var(--surface-2); }
+    .specimen__body--dark { background: var(--hfh-blue-900); }
+    .specimen__label {
+      padding: 10px 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--fg-3);
+      border-top: 1px solid var(--border);
+      background: var(--surface-2);
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .specimen__label b { color: var(--fg-1); }
+    .specimen__label code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: var(--surface-3);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: var(--fg-2);
+    }
+
+    /* ---- Colour swatches ---- */
+    .swatch-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .swatch {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      min-width: 120px;
+    }
+    .swatch__color { height: 72px; }
+    .swatch__meta { padding: 8px 12px; background: #fff; }
+    .swatch__name { font-size: 12px; font-weight: 600; color: var(--fg-1); }
+    .swatch__var  { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); margin-top: 2px; }
+
+    .tint-row {
+      display: flex;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+    .tint-row__label {
+      width: 72px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--fg-2);
+      background: #fff;
+      flex-shrink: 0;
+      border-right: 1px solid var(--border);
+    }
+    .tint-step {
+      flex: 1;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .neutral-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .neutral-tile {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .neutral-tile__swatch { height: 40px; }
+    .neutral-tile__meta { padding: 8px 10px; background: #fff; }
+    .neutral-tile__name { font-size: 11px; font-weight: 600; color: var(--fg-1); }
+    .neutral-tile__val  { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); margin-top: 1px; }
+
+    /* ---- Surfaces ---- */
+    .surface-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .surface-tile {
+      position: relative;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      min-height: 160px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid transparent;
+    }
+    .surface-tile__eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
+    .surface-tile__title { font-family: var(--font-display); font-weight: 800; font-size: 20px; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .surface-tile__desc { font-size: 12px; line-height: 1.5; }
+    .surface-tile__hex { font-family: var(--font-mono); font-size: 10px; opacity: 0.7; margin-top: 8px; }
+    .surface-tile__petal {
+      position: absolute;
+      right: -60px; bottom: -80px;
+      width: 200px; height: 200px;
+      background: url('assets/flower-mark.png') center/contain no-repeat;
+      opacity: 0.14;
+      pointer-events: none;
+    }
+
+    /* ---- Typography ---- */
+    .type-families { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .type-family-cell {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #fff;
+    }
+    .type-family-cell__name { font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-3); margin-bottom: 10px; }
+    .type-family-cell__tag { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); margin-top: 10px; display: block; }
+
+    .type-scale-row {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+    .type-scale-row:last-child { border-bottom: 0; }
+    .type-scale-row__sample { flex: 1; color: var(--hfh-blue); font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; }
+    .type-scale-row__meta { font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-3); width: 190px; text-align: right; }
+
+    .type-body-row {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+    .type-body-row:last-child { border-bottom: 0; }
+    .type-body-row__sample { flex: 1; }
+    .type-body-row__meta { font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-3); width: 200px; text-align: right; }
+
+    /* ---- Buttons ---- */
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 6px; }
+    .btn-row-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-3);
+      margin: 14px 0 8px;
+    }
+    /* Button styles */
+    .btn {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 160ms var(--ease-out);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      line-height: 1;
+    }
+    .btn--sm  { font-size: 13px; padding: 7px 14px; }
+    .btn--lg  { font-size: 17px; padding: 13px 26px; }
+    .btn--pill { border-radius: var(--radius-pill); }
+    .btn:active { transform: scale(0.98); }
+    .btn--primary { background: var(--hfh-blue); color: #fff; }
+    .btn--primary:hover { background: var(--hfh-blue-900); color: #fff; }
+    .btn--secondary { background: transparent; color: var(--hfh-blue); border-color: var(--hfh-blue); }
+    .btn--secondary:hover { background: var(--hfh-blue-50); }
+    .btn--ghost { background: transparent; color: var(--hfh-blue); padding-left: 4px; padding-right: 4px; }
+    .btn--ghost:hover { color: var(--hfh-orange); }
+    .btn--accent { background: var(--hfh-orange); color: #fff; }
+    .btn--accent:hover { background: var(--hfh-orange-700); color: #fff; }
+    .btn--teal { background: var(--hfh-teal); color: #0B1420; }
+    .btn--teal:hover { background: var(--hfh-teal-700); color: #fff; }
+    .btn--teal-outline { background: transparent; color: var(--hfh-teal-700); border-color: var(--hfh-teal); }
+    .btn--teal-outline:hover { background: var(--hfh-teal-50); }
+    .btn--disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+    .tag {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      display: inline-block;
+    }
+    .tag--blue   { background: var(--hfh-blue-50);   color: var(--hfh-blue); }
+    .tag--teal   { background: var(--hfh-teal-50);   color: var(--hfh-teal-700); }
+    .tag--orange { background: var(--hfh-orange-50); color: var(--hfh-orange-700); }
+
+    /* ---- Cards ---- */
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .card {
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+      cursor: pointer;
+    }
+    .card:hover { transform: translateY(-2px); }
+    .card__eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .card__title { font-family: var(--font-display); font-weight: 700; font-size: 20px; line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 6px; text-wrap: balance; }
+    .card__desc { font-size: 13.5px; line-height: 1.5; flex: 1; }
+    .card__meta { display: flex; gap: 12px; font-size: 12px; margin-top: 10px; flex-wrap: wrap; }
+    .card__meta span { display: inline-flex; align-items: center; gap: 6px; }
+    .card__meta span::before { content: ""; width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+    .card--white { background: #fff; border: 1px solid var(--border); box-shadow: var(--shadow-1); }
+    .card--white .card__eyebrow { color: var(--hfh-orange); }
+    .card--white .card__title   { color: var(--hfh-blue); }
+    .card--white .card__desc, .card--white .card__meta { color: var(--fg-3); }
+    .card--white .card__meta span::before { background: var(--hfh-teal); }
+    .card--white:hover { box-shadow: var(--shadow-2); }
+
+    .card--grey { background: var(--surface-2); border: 1px solid var(--border); }
+    .card--grey .card__eyebrow { color: var(--hfh-orange); }
+    .card--grey .card__title   { color: var(--hfh-blue); }
+    .card--grey .card__desc, .card--grey .card__meta { color: var(--fg-3); }
+    .card--grey .card__meta span::before { background: var(--hfh-teal); }
+    .card--grey:hover { box-shadow: var(--shadow-2); }
+
+    .card--blue { background: #1B4A9B; }
+    .card--blue .card__eyebrow { color: #52CBBE; }
+    .card--blue .card__title   { color: #fff; }
+    .card--blue .card__desc, .card--blue .card__meta { color: #BEEAE5; }
+    .card--blue .card__meta span::before { background: #FF6D4D; }
+
+    .card--teal { background: #52CBBE; }
+    .card--teal .card__eyebrow { color: #1B4A9B; }
+    .card--teal .card__title   { color: #0F2E63; }
+    .card--teal .card__desc, .card--teal .card__meta { color: #0B1420; }
+    .card--teal .card__meta span::before { background: #1B4A9B; }
+
+    .card--orange { background: #FF6D4D; }
+    .card--orange .card__eyebrow { color: #0F2E63; }
+    .card--orange .card__title   { color: #fff; }
+    .card--orange .card__desc, .card--orange .card__meta { color: #fff; }
+    .card--orange .card__meta span::before { background: #fff; }
+
+    .card--purple { background: #5E17EB; }
+    .card--purple .card__eyebrow { color: #52CBBE; }
+    .card--purple .card__title   { color: #fff; }
+    .card--purple .card__desc, .card--purple .card__meta { color: #BEEAE5; }
+    .card--purple .card__meta span::before { background: #FF6D4D; }
+
+    /* ---- Pull quotes ---- */
+    .pq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .pq {
+      border-radius: var(--radius-md);
+      padding: 22px 26px 20px;
+      min-height: 180px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .pq__eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+    .pq__quote { font-family: var(--font-display); font-weight: 700; font-size: 22px; line-height: 1.14; letter-spacing: -0.015em; margin: 0 0 12px; text-wrap: balance; }
+    .pq__quote em { font-style: normal; }
+    .pq__attrib { font-size: 11.5px; opacity: 0.85; }
+    .pq__ratio { font-family: var(--font-mono); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: var(--radius-pill); display: inline-block; margin-top: 6px; }
+
+    .pq--white { background: #fff; border: 1px solid var(--border); }
+    .pq--white .pq__eyebrow { color: #FF6D4D; }
+    .pq--white .pq__quote   { color: #0F2E63; }
+    .pq--white .pq__quote em { color: #FF6D4D; }
+    .pq--white .pq__attrib  { color: #5A6778; }
+    .pq--white .pq__ratio   { background: #EEF3FB; color: #0F2E63; }
+
+    .pq--blue { background: #1B4A9B; }
+    .pq--blue .pq__eyebrow { color: #52CBBE; }
+    .pq--blue .pq__quote   { color: #fff; }
+    .pq--blue .pq__quote em { color: #FFD2C5; }
+    .pq--blue .pq__attrib  { color: #BEEAE5; }
+    .pq--blue .pq__ratio   { background: rgba(255,255,255,0.16); color: #fff; }
+
+    .pq--teal { background: #52CBBE; }
+    .pq--teal .pq__eyebrow { color: #0F2E63; }
+    .pq--teal .pq__quote   { color: #0B1420; }
+    .pq--teal .pq__quote em { color: #0F2E63; }
+    .pq--teal .pq__attrib  { color: #0B1420; }
+    .pq--teal .pq__ratio   { background: rgba(11,20,32,0.12); color: #0B1420; }
+
+    .pq--orange { background: #FF6D4D; }
+    .pq--orange .pq__eyebrow { color: #0F2E63; }
+    .pq--orange .pq__quote   { color: #0F2E63; }
+    .pq--orange .pq__quote em { color: #fff; }
+    .pq--orange .pq__attrib  { color: #0F2E63; }
+    .pq--orange .pq__ratio   { background: rgba(15,46,99,0.18); color: #0F2E63; }
+
+    .pq--purple { background: #5E17EB; }
+    .pq--purple .pq__eyebrow { color: #52CBBE; }
+    .pq--purple .pq__quote   { color: #fff; }
+    .pq--purple .pq__quote em { color: #52CBBE; }
+    .pq--purple .pq__attrib  { color: rgba(255,255,255,0.78); }
+    .pq--purple .pq__ratio   { background: rgba(255,255,255,0.18); color: #fff; }
+
+    .pq--grey { background: #F7F8FB; border: 1px solid var(--border); }
+    .pq--grey .pq__eyebrow { color: #FF6D4D; }
+    .pq--grey .pq__quote   { color: #0F2E63; }
+    .pq--grey .pq__quote em { color: #FF6D4D; }
+    .pq--grey .pq__attrib  { color: #5A6778; }
+    .pq--grey .pq__ratio   { background: #fff; color: #0F2E63; border: 1px solid var(--border); }
+
+    /* ---- Forms ---- */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 12px; font-weight: 600; color: var(--fg-2); letter-spacing: 0.02em; }
+    .field input,
+    .field textarea,
+    .field select {
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 11px 14px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      color: var(--fg-1);
+      transition: border-color 160ms, box-shadow 160ms;
+    }
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      outline: 0;
+      border-color: var(--hfh-blue);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--hfh-blue) 25%, transparent);
+    }
+    .field input.error { border-color: var(--hfh-orange-700); }
+    .field input.success { border-color: var(--hfh-teal-700); }
+    .field--full { grid-column: 1 / -1; }
+    .field__hint { font-size: 12px; color: var(--fg-3); margin-top: 2px; }
+    .field__error { font-size: 12px; color: var(--hfh-orange-700); margin-top: 2px; }
+    .checkbox { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--fg-2); }
+    .checkbox input { width: 18px; height: 18px; accent-color: var(--hfh-blue); cursor: pointer; flex-shrink: 0; }
+
+    /* ---- Icons ---- */
+    .icon-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 16px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 6px;
+    }
+    .icon-row svg { width: 22px; height: 22px; stroke-width: 2; flex-shrink: 0; }
+    .icon-row__name { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; width: 90px; flex-shrink: 0; }
+    .icon-row__icons { display: flex; gap: 12px; flex: 1; }
+    .icon-row__label { font-family: var(--font-mono); font-size: 10.5px; margin-left: auto; }
+
+    .icon-row--blue   { color: var(--hfh-blue); }
+    .icon-row--teal   { color: var(--hfh-teal-700); }
+    .icon-row--orange { color: var(--hfh-orange-700); }
+    .icon-row--purple { color: var(--hfh-purple-500); }
+    .icon-row--on-blue { background: #1B4A9B; color: #fff; }
+    .icon-row--on-blue   .icon-row__name  { color: #52CBBE; }
+    .icon-row--on-blue   .icon-row__label { color: #BEEAE5; }
+    .icon-row--on-teal   { background: #52CBBE; color: #0B1420; }
+    .icon-row--on-teal   .icon-row__name  { color: #1B4A9B; }
+    .icon-row--on-teal   .icon-row__label { color: #0B1420; }
+    .icon-row--on-orange { background: #FF6D4D; color: #0F2E63; }
+    .icon-row--on-orange .icon-row__name  { color: #0F2E63; }
+    .icon-row--on-orange .icon-row__label { color: #0F2E63; }
+    .icon-row--on-purple { background: #5E17EB; color: #fff; }
+    .icon-row--on-purple .icon-row__name  { color: #52CBBE; }
+    .icon-row--on-purple .icon-row__label { color: #BEEAE5; }
+
+    /* ---- Radii ---- */
+    .radii-row { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+    .radius-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .radius-shape { width: 68px; height: 68px; background: var(--hfh-teal-200); border: 1px solid var(--hfh-teal); }
+    .radius-item__name { font-size: 12px; font-weight: 600; color: var(--fg-1); }
+    .radius-item__val  { font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-3); }
+
+    /* ---- Shadows ---- */
+    .shadows-row { display: flex; gap: 24px; flex-wrap: wrap; }
+    .shadow-item { display: flex; flex-direction: column; gap: 12px; }
+    .shadow-box {
+      width: 160px; height: 96px;
+      background: #fff;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: flex-end;
+      padding: 12px 14px;
+    }
+    .shadow-box__label { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); }
+    .shadow-item__desc { font-size: 12px; color: var(--fg-3); text-align: center; }
+
+    /* ---- Spacing ---- */
+    .spacing-row { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+    .spacing-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .spacing-box { background: var(--hfh-blue-200); border-radius: var(--radius-xs); }
+    .spacing-item__label { font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-3); }
+
+    /* ---- Logos ---- */
+    .logo-row { display: flex; gap: 14px; }
+    .logo-item { flex: 1; }
+    .logo-tile {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      min-height: 180px;
+    }
+    .logo-tile--dark { background: var(--hfh-blue); }
+    .logo-tile img { max-width: 100%; max-height: 150px; object-fit: contain; }
+    .logo-item__label {
+      margin-top: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-3);
+      text-align: center;
+    }
+
+    /* ---- Voice / guardrails ---- */
+    .guardrail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .guardrail {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      background: #fff;
+    }
+    .guardrail__check {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--hfh-blue);
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .guardrail__check::before { content: "✓"; color: var(--hfh-teal-700); font-weight: 700; }
+    .guardrail__desc { font-size: 12.5px; color: var(--fg-3); line-height: 1.5; }
+
+    .voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px; }
+    .voice-col h5 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--hfh-blue);
+      margin: 0 0 8px;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    .voice-col ul { margin: 0; padding: 0; list-style: none; }
+    .voice-col li { font-size: 13px; color: var(--fg-2); padding: 4px 0; line-height: 1.5; }
+    .voice-col li.do::before { content: "✓ "; color: var(--hfh-teal-700); font-weight: 700; }
+    .voice-col li.dont::before { content: "× "; color: var(--hfh-orange-700); font-weight: 700; }
+
+    /* ---- Motion specimen ---- */
+    .motion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .motion-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .motion-item__name { font-size: 12px; font-weight: 600; color: var(--fg-1); }
+    .motion-item__val  { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); text-align: center; }
+    .motion-demo {
+      width: 48px; height: 48px;
+      background: var(--hfh-blue-50);
+      border: 2px solid var(--hfh-blue);
+      border-radius: var(--radius-sm);
+    }
+    .motion-demo:hover { background: var(--hfh-blue); }
+
+    /* ---- Misc ---- */
+    .ds-header {
+      margin-bottom: 56px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ds-header__eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--hfh-orange);
+      margin-bottom: 8px;
+    }
+    .ds-header__title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 48px;
+      color: var(--hfh-blue);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .ds-header__sub {
+      font-size: 16px;
+      color: var(--fg-3);
+      max-width: 560px;
+      line-height: 1.55;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a class="sidebar__brand" href="index.html">
+      <img src="assets/flower-mark.png" alt="">
+      <div class="sidebar__brand-text">Human Future Hub<br>Design System</div>
+    </a>
+
+    <div class="sidebar__group">
+      <div class="sidebar__group-label">Foundation</div>
+      <a class="sidebar__link" href="#brand">Brand overview</a>
+      <a class="sidebar__link" href="#colour-primary">Colour — primary</a>
+      <a class="sidebar__link" href="#colour-tints">Colour — tints</a>
+      <a class="sidebar__link" href="#colour-neutrals">Colour — neutrals</a>
+      <a class="sidebar__link" href="#surfaces">Surfaces</a>
+    </div>
+
+    <div class="sidebar__group">
+      <div class="sidebar__group-label">Typography</div>
+      <a class="sidebar__link" href="#type-families">Font families</a>
+      <a class="sidebar__link" href="#type-display">Display</a>
+      <a class="sidebar__link" href="#type-headings">Headings</a>
+      <a class="sidebar__link" href="#type-body">Body styles</a>
+    </div>
+
+    <div class="sidebar__group">
+      <div class="sidebar__group-label">Components</div>
+      <a class="sidebar__link" href="#buttons">Buttons &amp; tags</a>
+      <a class="sidebar__link" href="#cards">Cards</a>
+      <a class="sidebar__link" href="#pull-quotes">Pull quotes</a>
+      <a class="sidebar__link" href="#forms">Forms</a>
+      <a class="sidebar__link" href="#icons">Iconography</a>
+    </div>
+
+    <div class="sidebar__group">
+      <div class="sidebar__group-label">Tokens</div>
+      <a class="sidebar__link" href="#radii">Radii scale</a>
+      <a class="sidebar__link" href="#shadows">Shadows</a>
+      <a class="sidebar__link" href="#spacing">Spacing</a>
+      <a class="sidebar__link" href="#motion">Motion</a>
+    </div>
+
+    <div class="sidebar__group">
+      <div class="sidebar__group-label">Brand identity</div>
+      <a class="sidebar__link" href="#logos">Logo lockups</a>
+      <a class="sidebar__link" href="#voice">Voice</a>
+      <a class="sidebar__link" href="#guardrails">Guardrails</a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <div class="ds-header">
+      <div class="ds-header__eyebrow">Human Future Hub · April 2026</div>
+      <div class="ds-header__title">Design System</div>
+      <p class="ds-header__sub">Single source of truth for visual and verbal identity. Colours, type, components, and voice — all in one place.</p>
+    </div>
+
+    <!-- ===================== BRAND OVERVIEW ===================== -->
+    <section class="ds-section" id="brand">
+      <div class="ds-section__eyebrow">01 — Brand</div>
+      <h2 class="ds-section__title">Brand overview</h2>
+      <div class="specimen">
+        <div class="specimen__body" style="display:flex; align-items:center; gap:28px; min-height:120px;">
+          <div style="width:84px;height:84px;flex-shrink:0;display:grid;place-items:center;background:var(--surface-2);border-radius:var(--radius-md);overflow:hidden;">
+            <img src="assets/flower-mark.png" alt="" style="width:64px;height:64px;object-fit:contain;">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-family:var(--font-display);font-weight:800;font-size:28px;color:var(--hfh-blue);line-height:1;letter-spacing:-0.01em;">Human Future Hub</div>
+            <div style="font-size:14px;color:var(--fg-3);">AI realists, not evangelists &middot; Berlin &middot; est. 2024</div>
+            <div style="display:flex;gap:6px;margin-top:4px;">
+              <span class="tag tag--blue">Future of Work</span>
+              <span class="tag tag--teal">Future of Education</span>
+              <span class="tag tag--orange">Educate the Educator</span>
+            </div>
+          </div>
+        </div>
+        <div class="specimen__label">
+          Berlin-based AI literacy social enterprise. Two pillars: Future of Work &amp; Future of Education. Flagship programme: <b>Educate the Educator</b>.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== COLOUR — PRIMARY ===================== -->
+    <section class="ds-section" id="colour-primary">
+      <div class="ds-section__eyebrow">02 — Colour</div>
+      <h2 class="ds-section__title">Primary brand colours</h2>
+      <p class="ds-section__desc">Four colours do all the work. Blue and teal carry visual weight. Orange is functional accent only — not decoration. Purple is used sparingly for backgrounds.</p>
+      <div class="swatch-row">
+        <div class="swatch" style="flex:1;">
+          <div class="swatch__color" style="background:#1B4A9B;"></div>
+          <div class="swatch__meta">
+            <div class="swatch__name">HFH Blue</div>
+            <div class="swatch__var">#1B4A9B &middot; <code>--hfh-blue</code> &middot; primary</div>
+          </div>
+        </div>
+        <div class="swatch" style="flex:1;">
+          <div class="swatch__color" style="background:#52CBBE;"></div>
+          <div class="swatch__meta">
+            <div class="swatch__name">HFH Teal</div>
+            <div class="swatch__var">#52CBBE &middot; <code>--hfh-teal</code> &middot; primary</div>
+          </div>
+        </div>
+        <div class="swatch" style="flex:1;">
+          <div class="swatch__color" style="background:#FF6D4D;"></div>
+          <div class="swatch__meta">
+            <div class="swatch__name">HFH Orange</div>
+            <div class="swatch__var">#FF6D4D &middot; <code>--hfh-orange</code> &middot; accent</div>
+          </div>
+        </div>
+        <div class="swatch" style="flex:1;">
+          <div class="swatch__color" style="background:#5E17EB;"></div>
+          <div class="swatch__meta">
+            <div class="swatch__name">HFH Purple</div>
+            <div class="swatch__var">#5E17EB &middot; <code>--hfh-purple</code> &middot; support</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== COLOUR — TINTS ===================== -->
+    <section class="ds-section" id="colour-tints">
+      <div class="ds-section__eyebrow">03 — Colour</div>
+      <h2 class="ds-section__title">Tint scales</h2>
+      <p class="ds-section__desc">Derived from the four brand colours. Use 50 and 200 for surfaces; 500/700 for text and UI elements on light backgrounds.</p>
+
+      <div class="tint-row">
+        <div class="tint-row__label">Blue</div>
+        <div class="tint-step" style="background:#EEF3FB;color:#1B4A9B;">-50</div>
+        <div class="tint-step" style="background:#C5D5EE;color:#1B4A9B;">-200</div>
+        <div class="tint-step" style="background:#3A6FC2;color:#fff;">-500</div>
+        <div class="tint-step" style="background:#1B4A9B;color:#fff;">-700</div>
+        <div class="tint-step" style="background:#0F2E63;color:#fff;">-900</div>
+      </div>
+      <div class="tint-row">
+        <div class="tint-row__label">Teal</div>
+        <div class="tint-step" style="background:#ECF9F7;color:#2DA094;">-50</div>
+        <div class="tint-step" style="background:#BEEAE5;color:#2DA094;">-200</div>
+        <div class="tint-step" style="background:#52CBBE;color:#0B1420;">-500</div>
+        <div class="tint-step" style="background:#2DA094;color:#fff;">-700</div>
+      </div>
+      <div class="tint-row">
+        <div class="tint-row__label">Orange</div>
+        <div class="tint-step" style="background:#FFF1ED;color:#E04A28;">-50</div>
+        <div class="tint-step" style="background:#FFD2C5;color:#E04A28;">-200</div>
+        <div class="tint-step" style="background:#FF6D4D;color:#fff;">-500</div>
+        <div class="tint-step" style="background:#E04A28;color:#fff;">-700</div>
+      </div>
+      <div class="tint-row">
+        <div class="tint-row__label">Purple</div>
+        <div class="tint-step" style="background:#EFE7FE;color:#5E17EB;">-50</div>
+        <div class="tint-step" style="background:#5E17EB;color:#fff;">-500</div>
+      </div>
+    </section>
+
+    <!-- ===================== COLOUR — NEUTRALS ===================== -->
+    <section class="ds-section" id="colour-neutrals">
+      <div class="ds-section__eyebrow">04 — Colour</div>
+      <h2 class="ds-section__title">Neutrals</h2>
+      <div class="neutral-grid">
+        <div class="neutral-tile"><div class="neutral-tile__swatch" style="background:#0B1420;"></div><div class="neutral-tile__meta"><div class="neutral-tile__name">fg-1 / ink</div><div class="neutral-tile__val">#0B1420</div></div></div>
+        <div class="neutral-tile"><div class="neutral-tile__swatch" style="background:#2A3647;"></div><div class="neutral-tile__meta"><div class="neutral-tile__name">fg-2</div><div class="neutral-tile__val">#2A3647</div></div></div>
+        <div class="neutral-tile"><div class="neutral-tile__swatch" style="background:#5A6778;"></div><div class="neutral-tile__meta"><div class="neutral-tile__name">fg-3 / muted</div><div class="neutral-tile__val">#5A6778</div></div></div>
+        <div class="neutral-tile"><div class="neutral-tile__swatch" style="background:#8A94A4;"></div><div class="neutral-tile__meta"><div class="neutral-tile__name">fg-4 / placeholder</div><div class="neutral-tile__val">#8A94A4</div></div></div>
+        <div class="neutral-tile"><div class="neutral-tile__swatch" style="background:#FFFFFF;border:1px solid var(--border);"></div><div class="neutral-tile__meta"><div class="neutral-tile__name">surface</div><div class="neutral-tile__val">#FFFFFF</div></div></div>
+        <div class="neutral-tile"><div class="neutral-tile__swatch" style="background:#F7F8FB;"></div><div class="neutral-tile__meta"><div class="neutral-tile__name">surface-2</div><div class="neutral-tile__val">#F7F8FB</div></div></div>
+        <div class="neutral-tile"><div class="neutral-tile__swatch" style="background:#EEF1F6;"></div><div class="neutral-tile__meta"><div class="neutral-tile__name">surface-3</div><div class="neutral-tile__val">#EEF1F6</div></div></div>
+        <div class="neutral-tile"><div class="neutral-tile__swatch" style="background:#E3E7EE;"></div><div class="neutral-tile__meta"><div class="neutral-tile__name">border</div><div class="neutral-tile__val">#E3E7EE</div></div></div>
+      </div>
+    </section>
+
+    <!-- ===================== SURFACES ===================== -->
+    <section class="ds-section" id="surfaces">
+      <div class="ds-section__eyebrow">05 — Colour</div>
+      <h2 class="ds-section__title">Surfaces</h2>
+      <p class="ds-section__desc">Brand-coloured surfaces in row 1. Neutral workhorses in row 2. Use the flower mark as a cropped decorative element — never recoloured.</p>
+      <div class="surface-grid">
+        <div class="surface-tile" style="background:#1B4A9B;">
+          <div>
+            <div class="surface-tile__eyebrow" style="color:#52CBBE;">Anchor</div>
+            <div class="surface-tile__title" style="color:#fff;">Nobody is left behind.</div>
+            <div class="surface-tile__desc" style="color:#BEEAE5;">Hero blocks, nav, primary CTAs.</div>
+          </div>
+          <div class="surface-tile__hex" style="color:rgba(190,234,229,0.8);">#1B4A9B &middot; <code style="background:rgba(255,255,255,0.1);color:#BEEAE5;">--hfh-blue</code></div>
+          <div class="surface-tile__petal"></div>
+        </div>
+        <div class="surface-tile" style="background:#52CBBE;">
+          <div>
+            <div class="surface-tile__eyebrow" style="color:#1B4A9B;">Support</div>
+            <div class="surface-tile__title" style="color:#0F2E63;">Thinking alongside you.</div>
+            <div class="surface-tile__desc" style="color:#0B1420;">Section fills, table backgrounds.</div>
+          </div>
+          <div class="surface-tile__hex" style="color:rgba(11,20,32,0.6);">#52CBBE &middot; <code style="background:rgba(11,20,32,0.1);color:#0B1420;">--hfh-teal</code></div>
+          <div class="surface-tile__petal"></div>
+        </div>
+        <div class="surface-tile" style="background:#FF6D4D;">
+          <div>
+            <div class="surface-tile__eyebrow" style="color:#0F2E63;">Accent</div>
+            <div class="surface-tile__title" style="color:#fff;">One highlight, not ten.</div>
+            <div class="surface-tile__desc" style="color:rgba(255,255,255,0.92);">Pull quotes, emphasis — sparingly.</div>
+          </div>
+          <div class="surface-tile__hex" style="color:rgba(255,255,255,0.7);">#FF6D4D &middot; <code style="background:rgba(15,46,99,0.15);color:#0F2E63;">--hfh-orange</code></div>
+          <div class="surface-tile__petal"></div>
+        </div>
+        <div class="surface-tile" style="background:#5E17EB;">
+          <div>
+            <div class="surface-tile__eyebrow" style="color:#52CBBE;">Supporting</div>
+            <div class="surface-tile__title" style="color:#fff;">Used sparingly.</div>
+            <div class="surface-tile__desc" style="color:#BEEAE5;">Essay backgrounds, long-form only.</div>
+          </div>
+          <div class="surface-tile__hex" style="color:rgba(190,234,229,0.8);">#5E17EB &middot; <code style="background:rgba(255,255,255,0.1);color:#BEEAE5;">--hfh-purple</code></div>
+          <div class="surface-tile__petal"></div>
+        </div>
+        <div class="surface-tile" style="background:#fff;border-color:var(--border);">
+          <div>
+            <div class="surface-tile__eyebrow" style="color:#FF6D4D;">Default</div>
+            <div class="surface-tile__title" style="color:#1B4A9B;">Surface — white.</div>
+            <div class="surface-tile__desc" style="color:#2A3647;">Most content lives here. White space doing work.</div>
+          </div>
+          <div class="surface-tile__hex" style="color:#5A6778;">#FFFFFF &middot; <code>--surface</code></div>
+        </div>
+        <div class="surface-tile" style="background:#F7F8FB;border-color:var(--border);">
+          <div>
+            <div class="surface-tile__eyebrow" style="color:#FF6D4D;">Quiet</div>
+            <div class="surface-tile__title" style="color:#1B4A9B;">Surface — grey.</div>
+            <div class="surface-tile__desc" style="color:#2A3647;">Section breaks, secondary pages.</div>
+          </div>
+          <div class="surface-tile__hex" style="color:#5A6778;">#F7F8FB &middot; <code>--surface-2</code></div>
+        </div>
+        <div class="surface-tile" style="background:#F7F8FB;border-color:var(--border);position:relative;overflow:hidden;">
+          <div style="position:relative;z-index:2;">
+            <div class="surface-tile__eyebrow" style="color:#FF6D4D;">Decorative</div>
+            <div class="surface-tile__title" style="color:#1B4A9B;max-width:60%;">Petal crop.</div>
+            <div class="surface-tile__desc" style="color:#2A3647;max-width:56%;">Flower mark, cropped off-canvas. One petal shows.</div>
+          </div>
+          <div class="surface-tile__hex" style="color:#5A6778;position:relative;z-index:2;">flower-mark.png</div>
+          <div style="position:absolute;right:-60px;bottom:-80px;width:200px;height:200px;background:url('assets/flower-mark.png') center/contain no-repeat;pointer-events:none;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TYPOGRAPHY — FAMILIES ===================== -->
+    <section class="ds-section" id="type-families">
+      <div class="ds-section__eyebrow">06 — Typography</div>
+      <h2 class="ds-section__title">Font families</h2>
+      <div class="type-families">
+        <div class="type-family-cell">
+          <div class="type-family-cell__name">League Spartan · display</div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:32px;letter-spacing:-0.02em;color:var(--hfh-blue);line-height:1;">Realists,<br>not evangelists.</div>
+          <span class="type-family-cell__tag">web &middot; decks &middot; social · <code>--font-display</code></span>
+        </div>
+        <div class="type-family-cell">
+          <div class="type-family-cell__name">Public Sans · body (web)</div>
+          <div style="font-family:'Public Sans',sans-serif;font-weight:400;font-size:18px;color:var(--fg-1);line-height:1.3;">Warm but not fluffy. Hard topics, honestly.</div>
+          <span class="type-family-cell__tag">web UI &middot; body &middot; labels · <code>--font-body</code></span>
+        </div>
+        <div class="type-family-cell">
+          <div class="type-family-cell__name">Inter · documents</div>
+          <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:18px;color:var(--fg-1);line-height:1.3;">Warm but not fluffy. Hard topics, honestly.</div>
+          <span class="type-family-cell__tag">DOCX &middot; email &middot; PDF · <code>--font-doc</code></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TYPOGRAPHY — DISPLAY ===================== -->
+    <section class="ds-section" id="type-display">
+      <div class="ds-section__eyebrow">07 — Typography</div>
+      <h2 class="ds-section__title">Display</h2>
+      <div class="specimen">
+        <div class="specimen__body">
+          <div style="font-family:var(--font-display);font-weight:800;font-size:clamp(48px,7vw,80px);line-height:0.95;letter-spacing:-0.025em;color:var(--hfh-blue);">Nobody is left behind.</div>
+        </div>
+        <div class="specimen__label">
+          <b>League Spartan</b> &middot; weight 800 &middot; 88px / line-height 1.02 &middot; tracking &minus;0.02em &middot; <code>--hfh-blue</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TYPOGRAPHY — HEADINGS ===================== -->
+    <section class="ds-section" id="type-headings">
+      <div class="ds-section__eyebrow">08 — Typography</div>
+      <h2 class="ds-section__title">Headings</h2>
+      <div class="specimen">
+        <div class="specimen__body">
+          <div class="type-scale-row">
+            <div class="type-scale-row__sample" style="font-size:60px;font-weight:800;letter-spacing:-0.02em;">Heading one</div>
+            <div class="type-scale-row__meta">h1 &middot; 60 / 1.02 &middot; 800 &middot; <code>--fs-60</code></div>
+          </div>
+          <div class="type-scale-row">
+            <div class="type-scale-row__sample" style="font-size:44px;">Heading two</div>
+            <div class="type-scale-row__meta">h2 &middot; 44 / 1.15 &middot; 700 &middot; <code>--fs-44</code></div>
+          </div>
+          <div class="type-scale-row">
+            <div class="type-scale-row__sample" style="font-size:32px;">Heading three</div>
+            <div class="type-scale-row__meta">h3 &middot; 32 / 1.15 &middot; 700 &middot; <code>--fs-32</code></div>
+          </div>
+          <div class="type-scale-row">
+            <div class="type-scale-row__sample" style="font-size:24px;font-weight:600;">Heading four</div>
+            <div class="type-scale-row__meta">h4 &middot; 24 / 1.15 &middot; 600 &middot; <code>--fs-24</code></div>
+          </div>
+        </div>
+        <div class="specimen__label">All headings: League Spartan &middot; <code>--hfh-blue</code> &middot; tracking &minus;0.01em (display: &minus;0.02em)</div>
+      </div>
+    </section>
+
+    <!-- ===================== TYPOGRAPHY — BODY ===================== -->
+    <section class="ds-section" id="type-body">
+      <div class="ds-section__eyebrow">09 — Typography</div>
+      <h2 class="ds-section__title">Body styles</h2>
+      <div class="specimen">
+        <div class="specimen__body">
+          <div class="type-body-row">
+            <div class="type-body-row__sample" style="font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--hfh-orange);">Programme &middot; Future of Education</div>
+            <div class="type-body-row__meta">eyebrow &middot; 12 &middot; 600 &middot; 0.08em &middot; <code>--hfh-orange</code></div>
+          </div>
+          <div class="type-body-row">
+            <div class="type-body-row__sample" style="font-size:20px;line-height:1.55;color:var(--fg-2);">A thoughtful person who has thought carefully about a serious problem.</div>
+            <div class="type-body-row__meta">lede &middot; 20 / 1.55 &middot; 400</div>
+          </div>
+          <div class="type-body-row">
+            <div class="type-body-row__sample" style="font-size:16px;line-height:1.5;color:var(--fg-2);">Teachers in Germany have no structured AI support. That&rsquo;s the problem we&rsquo;re working on.</div>
+            <div class="type-body-row__meta">body &middot; 16 / 1.5 &middot; 400</div>
+          </div>
+          <div class="type-body-row">
+            <div class="type-body-row__sample" style="font-size:14px;color:var(--fg-3);">Caption &middot; event metadata, timestamps, secondary labels.</div>
+            <div class="type-body-row__meta">caption &middot; 14 &middot; 400 &middot; <code>--fg-3</code></div>
+          </div>
+          <div class="type-body-row">
+            <div class="type-body-row__sample" style="font-family:var(--font-mono);font-size:13px;color:var(--fg-2);">2026-04-02 &nbsp; humanfuturehub.org</div>
+            <div class="type-body-row__meta">mono &middot; 13 &middot; <code>--font-mono</code></div>
+          </div>
+        </div>
+        <div class="specimen__label">Body text: <b>Public Sans</b> &middot; Monospace: system UI mono stack</div>
+      </div>
+    </section>
+
+    <!-- ===================== BUTTONS ===================== -->
+    <section class="ds-section" id="buttons">
+      <div class="ds-section__eyebrow">10 — Components</div>
+      <h2 class="ds-section__title">Buttons &amp; tags</h2>
+      <div class="specimen">
+        <div class="specimen__body">
+          <div class="btn-row-label">Blue family</div>
+          <div class="btn-row">
+            <button class="btn btn--primary">Join the programme</button>
+            <button class="btn btn--secondary">Read more</button>
+            <button class="btn btn--ghost">Learn more &rarr;</button>
+            <button class="btn btn--primary btn--disabled" disabled>Disabled</button>
+          </div>
+
+          <div class="btn-row-label">Sizes</div>
+          <div class="btn-row">
+            <button class="btn btn--primary btn--sm">Small</button>
+            <button class="btn btn--primary">Default</button>
+            <button class="btn btn--primary btn--lg">Large</button>
+            <button class="btn btn--secondary btn--pill">Pill shape</button>
+          </div>
+
+          <div class="btn-row-label">Accent &amp; teal</div>
+          <div class="btn-row">
+            <button class="btn btn--accent">Book a seat</button>
+            <button class="btn btn--teal">See the programme</button>
+            <button class="btn btn--teal-outline">Download the brief</button>
+            <button class="btn btn--teal btn--pill">Subscribe</button>
+          </div>
+
+          <div class="btn-row-label">Tags / chips</div>
+          <div class="btn-row">
+            <span class="tag tag--blue">Future of Work</span>
+            <span class="tag tag--teal">Future of Education</span>
+            <span class="tag tag--orange">Workshop &middot; 10 Nov</span>
+          </div>
+        </div>
+        <div class="specimen__label">
+          Border-radius: <code>--radius-sm</code> (8px) &middot; hover: background darkens &middot; press: <code>scale(0.98)</code> &middot; disabled: 40% opacity
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CARDS ===================== -->
+    <section class="ds-section" id="cards">
+      <div class="ds-section__eyebrow">11 — Components</div>
+      <h2 class="ds-section__title">Cards</h2>
+      <p class="ds-section__desc">Six surface variants. Orange: use once per screen max. Differentiation comes from content hierarchy and the eyebrow label — not decorative strips.</p>
+      <div class="card-grid">
+        <div class="card card--white">
+          <div class="card__eyebrow">Programme</div>
+          <h3 class="card__title">Educate the Educator</h3>
+          <div class="card__desc">A structured AI literacy track for teachers and parents who want practical ground to stand on.</div>
+          <div class="card__meta"><span>6 weeks</span><span>Berlin + online</span></div>
+        </div>
+        <div class="card card--grey">
+          <div class="card__eyebrow">Event &middot; 12 Nov</div>
+          <h3 class="card__title">The realist&rsquo;s guide to classroom AI</h3>
+          <div class="card__desc">An evening with practitioners from Berlin, Munich and Hamburg. No demos. No hype.</div>
+          <div class="card__meta"><span>Workshop</span><span>38 seats left</span></div>
+        </div>
+        <div class="card card--blue">
+          <div class="card__eyebrow">Flagship</div>
+          <h3 class="card__title">Nobody is left behind.</h3>
+          <div class="card__desc">A six-week programme for teachers in Germany — structured support, honest answers.</div>
+          <div class="card__meta"><span>2026 cohort</span><span>Applications open</span></div>
+        </div>
+        <div class="card card--teal">
+          <div class="card__eyebrow">Practitioner circle</div>
+          <h3 class="card__title">Thinking alongside, not at.</h3>
+          <div class="card__desc">Small-group sessions for people working on AI inside their organisation.</div>
+          <div class="card__meta"><span>Monthly</span><span>Closed group</span></div>
+        </div>
+        <div class="card card--orange">
+          <div class="card__eyebrow">Accent — use once per screen</div>
+          <h3 class="card__title">One highlight. Not ten.</h3>
+          <div class="card__desc">Orange is for the single thing you want people to remember. Never use more than once per page.</div>
+          <div class="card__meta"><span>Accent only</span></div>
+        </div>
+        <div class="card card--purple">
+          <div class="card__eyebrow">Long-form</div>
+          <h3 class="card__title">Essays and field notes.</h3>
+          <div class="card__desc">Purple sits behind longer reads — systemic discussion, not partisan reaction.</div>
+          <div class="card__meta"><span>Substack</span><span>Weekly</span></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-family:var(--font-mono);font-size:11px;color:var(--fg-3);">
+        Radius: <code>--radius-md</code> (12px) &middot; hover: <code>translateY(-2px)</code> + <code>--shadow-2</code> &middot; No left-edge colour strips
+      </div>
+    </section>
+
+    <!-- ===================== PULL QUOTES ===================== -->
+    <section class="ds-section" id="pull-quotes">
+      <div class="ds-section__eyebrow">12 — Components</div>
+      <h2 class="ds-section__title">Pull quotes</h2>
+      <p class="ds-section__desc">All six surface variants, each with contrast ratios confirmed at AAA. On orange and teal, use dark ink only — white fails WCAG on these surfaces.</p>
+      <div class="pq-grid">
+        <div class="pq pq--white">
+          <div>
+            <div class="pq__eyebrow">White &middot; anchor ink</div>
+            <blockquote class="pq__quote">Technology is the context. <em>The human experience</em> is the subject.</blockquote>
+          </div>
+          <div><div class="pq__attrib">ink #0F2E63 on #FFFFFF</div><span class="pq__ratio">AAA &middot; 13.6:1</span></div>
+        </div>
+        <div class="pq pq--blue">
+          <div>
+            <div class="pq__eyebrow">Blue &middot; reversed</div>
+            <blockquote class="pq__quote">The Silicon Valley narrative is loud, and <em>too well funded</em>.</blockquote>
+          </div>
+          <div><div class="pq__attrib">#FFFFFF on #1B4A9B</div><span class="pq__ratio">AAA &middot; 8.6:1</span></div>
+        </div>
+        <div class="pq pq--teal">
+          <div>
+            <div class="pq__eyebrow">Teal &middot; dark ink</div>
+            <blockquote class="pq__quote">We&rsquo;re thinking <em>alongside you</em>, not at you.</blockquote>
+          </div>
+          <div><div class="pq__attrib">#0B1420 on #52CBBE</div><span class="pq__ratio">AAA &middot; 11.2:1</span></div>
+        </div>
+        <div class="pq pq--orange">
+          <div>
+            <div class="pq__eyebrow">Orange &middot; dark ink only</div>
+            <blockquote class="pq__quote">One highlight, not ten. <em>Warmth</em> comes from specifics.</blockquote>
+          </div>
+          <div><div class="pq__attrib">#0F2E63 on #FF6D4D</div><span class="pq__ratio">AAA &middot; 7.3:1</span></div>
+        </div>
+        <div class="pq pq--purple">
+          <div>
+            <div class="pq__eyebrow">Purple &middot; reversed</div>
+            <blockquote class="pq__quote">Systemic, not reactive. <em>Human first.</em></blockquote>
+          </div>
+          <div><div class="pq__attrib">#FFFFFF on #5E17EB</div><span class="pq__ratio">AAA &middot; 7.4:1</span></div>
+        </div>
+        <div class="pq pq--grey">
+          <div>
+            <div class="pq__eyebrow">Grey &middot; anchor ink</div>
+            <blockquote class="pq__quote">A thoughtful person, <em>thinking honestly</em> about a serious problem.</blockquote>
+          </div>
+          <div><div class="pq__attrib">#0F2E63 on #F7F8FB</div><span class="pq__ratio">AAA &middot; 12.8:1</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FORMS ===================== -->
+    <section class="ds-section" id="forms">
+      <div class="ds-section__eyebrow">13 — Components</div>
+      <h2 class="ds-section__title">Forms</h2>
+      <div class="specimen">
+        <div class="specimen__body">
+          <div class="form-grid">
+            <div class="field">
+              <label>Your name</label>
+              <input type="text" placeholder="Kata Schmidt">
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="email" placeholder="you@school.de">
+            </div>
+            <div class="field">
+              <label>Role</label>
+              <select>
+                <option>Teacher</option>
+                <option>Parent</option>
+                <option>School leader</option>
+                <option>Organisation</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Error state</label>
+              <input type="email" class="error" value="not-an-email">
+              <div class="field__error">Enter a valid email address.</div>
+            </div>
+            <div class="field field--full">
+              <label>What are you hoping to learn?</label>
+              <textarea rows="3" placeholder="We're thinking alongside you — a sentence or two helps us prepare."></textarea>
+              <div class="field__hint">No right answers. No wrong ones either.</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;">
+            <label class="checkbox"><input type="checkbox" checked> I&rsquo;d like the monthly reader — systemic, not reactive.</label>
+            <label class="checkbox"><input type="checkbox"> Notify me when applications for the 2026 cohort open.</label>
+          </div>
+        </div>
+        <div class="specimen__label">
+          Border: <code>--border-strong</code> at rest &middot; focus: <code>--hfh-blue</code> ring &middot; radius: <code>--radius-sm</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ICONS ===================== -->
+    <section class="ds-section" id="icons">
+      <div class="ds-section__eyebrow">14 — Components</div>
+      <h2 class="ds-section__title">Iconography</h2>
+      <p class="ds-section__desc">Lucide — open-source, 2px stroke, outline only. Colour inherits via <code>currentColor</code>. On orange and teal surfaces, use dark ink to meet contrast requirements.</p>
+      <div class="specimen">
+        <div class="specimen__body" style="padding:16px 20px;display:flex;flex-direction:column;gap:6px;">
+          <div class="icon-row icon-row--blue">
+            <div class="icon-row__name">Blue</div>
+            <div class="icon-row__icons">
+              <i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i>
+            </div>
+            <div class="icon-row__label" style="color:var(--fg-3);">primary &middot; <code>--hfh-blue</code></div>
+          </div>
+          <div class="icon-row icon-row--teal">
+            <div class="icon-row__name">Teal</div>
+            <div class="icon-row__icons">
+              <i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i>
+            </div>
+            <div class="icon-row__label" style="color:var(--fg-3);">support &middot; <code>--hfh-teal-700</code></div>
+          </div>
+          <div class="icon-row icon-row--orange">
+            <div class="icon-row__name">Orange</div>
+            <div class="icon-row__icons">
+              <i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i>
+            </div>
+            <div class="icon-row__label" style="color:var(--fg-3);">accent &middot; <code>--hfh-orange-700</code></div>
+          </div>
+          <div class="icon-row icon-row--purple">
+            <div class="icon-row__name">Purple</div>
+            <div class="icon-row__icons">
+              <i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i>
+            </div>
+            <div class="icon-row__label" style="color:var(--fg-3);">long-form &middot; <code>--hfh-purple-500</code></div>
+          </div>
+          <div class="icon-row icon-row--on-blue" style="border-radius:var(--radius-sm);">
+            <div class="icon-row__name">On blue</div>
+            <div class="icon-row__icons">
+              <i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i>
+            </div>
+            <div class="icon-row__label">reversed &middot; white on blue</div>
+          </div>
+          <div class="icon-row icon-row--on-teal" style="border-radius:var(--radius-sm);">
+            <div class="icon-row__name">On teal</div>
+            <div class="icon-row__icons">
+              <i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i>
+            </div>
+            <div class="icon-row__label">reversed &middot; ink on teal</div>
+          </div>
+          <div class="icon-row icon-row--on-orange" style="border-radius:var(--radius-sm);">
+            <div class="icon-row__name">On orange</div>
+            <div class="icon-row__icons">
+              <i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i>
+            </div>
+            <div class="icon-row__label">reversed &middot; ink on orange</div>
+          </div>
+          <div class="icon-row icon-row--on-purple" style="border-radius:var(--radius-sm);">
+            <div class="icon-row__name">On purple</div>
+            <div class="icon-row__icons">
+              <i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i>
+            </div>
+            <div class="icon-row__label">reversed &middot; white on purple</div>
+          </div>
+        </div>
+        <div class="specimen__label">
+          Lucide CDN &middot; stroke-width 2 &middot; 24px default &middot; sizes: 16 20 24 32 48 &middot; outline only — no filled variants
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RADII ===================== -->
+    <section class="ds-section" id="radii">
+      <div class="ds-section__eyebrow">15 — Tokens</div>
+      <h2 class="ds-section__title">Radii scale</h2>
+      <div class="specimen">
+        <div class="specimen__body">
+          <div class="radii-row">
+            <div class="radius-item">
+              <div class="radius-shape" style="border-radius:4px;"></div>
+              <div class="radius-item__name">xs &middot; 4px</div>
+              <div class="radius-item__val"><code>--radius-xs</code><br>chips, code</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-shape" style="border-radius:8px;"></div>
+              <div class="radius-item__name">sm &middot; 8px</div>
+              <div class="radius-item__val"><code>--radius-sm</code><br>buttons, inputs</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-shape" style="border-radius:12px;"></div>
+              <div class="radius-item__name">md &middot; 12px</div>
+              <div class="radius-item__val"><code>--radius-md</code><br>cards</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-shape" style="border-radius:20px;"></div>
+              <div class="radius-item__name">lg &middot; 20px</div>
+              <div class="radius-item__val"><code>--radius-lg</code><br>hero cards</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-shape" style="border-radius:28px;"></div>
+              <div class="radius-item__name">xl &middot; 28px</div>
+              <div class="radius-item__val"><code>--radius-xl</code><br>modals</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-shape" style="border-radius:999px;"></div>
+              <div class="radius-item__name">pill</div>
+              <div class="radius-item__val"><code>--radius-pill</code><br>tags, avatars</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-shape" style="border-radius:62% 38% 56% 44% / 54% 48% 52% 46%;"></div>
+              <div class="radius-item__name">petal</div>
+              <div class="radius-item__val"><code>--radius-petal</code><br>brand blob</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SHADOWS ===================== -->
+    <section class="ds-section" id="shadows">
+      <div class="ds-section__eyebrow">16 — Tokens</div>
+      <h2 class="ds-section__title">Shadows</h2>
+      <p class="ds-section__desc">Soft, low-key, never dramatic. All shadows use the blue hue family — no neutral grey shadows.</p>
+      <div class="specimen">
+        <div class="specimen__body specimen__body--alt">
+          <div class="shadows-row">
+            <div class="shadow-item">
+              <div class="shadow-box" style="box-shadow:0 1px 2px rgba(15,46,99,0.06), 0 1px 1px rgba(15,46,99,0.04);">
+                <div class="shadow-box__label">shadow-1</div>
+              </div>
+              <div class="shadow-item__desc">Cards at rest<br><code style="font-size:10px;">--shadow-1</code></div>
+            </div>
+            <div class="shadow-item">
+              <div class="shadow-box" style="box-shadow:0 4px 12px rgba(15,46,99,0.08), 0 1px 2px rgba(15,46,99,0.04);">
+                <div class="shadow-box__label">shadow-2</div>
+              </div>
+              <div class="shadow-item__desc">Hover, dropdowns<br><code style="font-size:10px;">--shadow-2</code></div>
+            </div>
+            <div class="shadow-item">
+              <div class="shadow-box" style="box-shadow:0 12px 32px rgba(15,46,99,0.12), 0 2px 4px rgba(15,46,99,0.04);">
+                <div class="shadow-box__label">shadow-3</div>
+              </div>
+              <div class="shadow-item__desc">Floating, modals<br><code style="font-size:10px;">--shadow-3</code></div>
+            </div>
+          </div>
+        </div>
+        <div class="specimen__label">No inner shadows &middot; No coloured glows &middot; No neumorphism &middot; Max one shadow-3 per screen</div>
+      </div>
+    </section>
+
+    <!-- ===================== SPACING ===================== -->
+    <section class="ds-section" id="spacing">
+      <div class="ds-section__eyebrow">17 — Tokens</div>
+      <h2 class="ds-section__title">Spacing scale</h2>
+      <p class="ds-section__desc">4pt base grid. Section padding minimum: <code>--space-8</code> (64px). Hero sections: <code>--space-10</code> (128px).</p>
+      <div class="specimen">
+        <div class="specimen__body">
+          <div class="spacing-row">
+            <div class="spacing-item"><div class="spacing-box" style="width:4px;height:4px;"></div><div class="spacing-item__label">1&middot;4</div></div>
+            <div class="spacing-item"><div class="spacing-box" style="width:8px;height:8px;"></div><div class="spacing-item__label">2&middot;8</div></div>
+            <div class="spacing-item"><div class="spacing-box" style="width:12px;height:12px;"></div><div class="spacing-item__label">3&middot;12</div></div>
+            <div class="spacing-item"><div class="spacing-box" style="width:16px;height:16px;"></div><div class="spacing-item__label">4&middot;16</div></div>
+            <div class="spacing-item"><div class="spacing-box" style="width:24px;height:24px;"></div><div class="spacing-item__label">5&middot;24</div></div>
+            <div class="spacing-item"><div class="spacing-box" style="width:32px;height:32px;"></div><div class="spacing-item__label">6&middot;32</div></div>
+            <div class="spacing-item"><div class="spacing-box" style="width:48px;height:48px;"></div><div class="spacing-item__label">7&middot;48</div></div>
+            <div class="spacing-item"><div class="spacing-box" style="width:64px;height:64px;"></div><div class="spacing-item__label">8&middot;64</div></div>
+            <div class="spacing-item"><div class="spacing-box" style="width:96px;height:96px;"></div><div class="spacing-item__label">9&middot;96</div></div>
+            <div class="spacing-item"><div class="spacing-box" style="width:128px;height:128px;"></div><div class="spacing-item__label">10&middot;128</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MOTION ===================== -->
+    <section class="ds-section" id="motion">
+      <div class="ds-section__eyebrow">18 — Tokens</div>
+      <h2 class="ds-section__title">Motion</h2>
+      <p class="ds-section__desc">Restrained. Short durations, natural easing. No bouncing, no parallax, no particles.</p>
+      <div class="specimen">
+        <div class="specimen__body">
+          <div class="motion-grid">
+            <div class="motion-item">
+              <div class="motion-item__name">Fast</div>
+              <div class="motion-item__val"><code>--dur-fast</code><br>120ms<br>Link colours, icon states</div>
+            </div>
+            <div class="motion-item">
+              <div class="motion-item__name">Base</div>
+              <div class="motion-item__val"><code>--dur-base</code><br>200ms<br>Button hover, card lift</div>
+            </div>
+            <div class="motion-item">
+              <div class="motion-item__name">Slow</div>
+              <div class="motion-item__val"><code>--dur-slow</code><br>360ms<br>Page transitions, modals</div>
+            </div>
+          </div>
+        </div>
+        <div class="specimen__label">
+          Easing: <code>--ease-out: cubic-bezier(0.2, 0.8, 0.2, 1)</code> &middot; Card hover: <code>translateY(-2px)</code> &middot; Press: <code>scale(0.98)</code> at 80ms
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOGOS ===================== -->
+    <section class="ds-section" id="logos">
+      <div class="ds-section__eyebrow">19 — Brand identity</div>
+      <h2 class="ds-section__title">Logo lockups</h2>
+      <p class="ds-section__desc">Copy logos from <code>assets/</code> — do not hotlink externally. Never recolour the flower mark.</p>
+      <div class="logo-row">
+        <div class="logo-item">
+          <div class="logo-tile"><img src="assets/logo-full.png" alt="HFH logo full"></div>
+          <div class="logo-item__label">Primary &middot; on white</div>
+        </div>
+        <div class="logo-item">
+          <div class="logo-tile"><img src="assets/flower-mark.png" alt="HFH flower mark"></div>
+          <div class="logo-item__label">Flower mark</div>
+        </div>
+        <div class="logo-item">
+          <div class="logo-tile logo-tile--dark"><img src="assets/logo-stacked.png" alt="HFH logo stacked reversed"></div>
+          <div class="logo-item__label">Stacked &middot; reversed on blue</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VOICE ===================== -->
+    <section class="ds-section" id="voice">
+      <div class="ds-section__eyebrow">20 — Brand identity</div>
+      <h2 class="ds-section__title">Voice — do &amp; avoid</h2>
+      <p class="ds-section__desc">Read the copy aloud. Does it sound like a committee wrote it? Rewrite. Does it start with the strongest idea? If not, restructure.</p>
+      <div class="specimen">
+        <div class="specimen__body">
+          <div class="voice-grid">
+            <div class="voice-col">
+              <h5>Do</h5>
+              <ul>
+                <li class="do">Sound like a person wrote it.</li>
+                <li class="do">Name specifics — countries, numbers, real examples.</li>
+                <li class="do">State positions confidently, without over-explaining.</li>
+                <li class="do">Discuss systemic AI impact.</li>
+                <li class="do">Short sentences that land on their own.</li>
+              </ul>
+            </div>
+            <div class="voice-col">
+              <h5>Avoid</h5>
+              <ul>
+                <li class="dont">"We educate. We connect. We empower."</li>
+                <li class="dont">Corporate HR-speak and nonprofit boilerplate.</li>
+                <li class="dont">Hedging ("perhaps", "it might be worth considering").</li>
+                <li class="dont">Filler openers ("In today&rsquo;s world…", "As we all know…").</li>
+                <li class="dont">AI product hype or commenting on launches.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="specimen__label">
+          Sentence case for headings. UPPERCASE for eyebrow labels only. Oxford comma on. British spelling. No emoji — ever.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== GUARDRAILS ===================== -->
+    <section class="ds-section" id="guardrails">
+      <div class="ds-section__eyebrow">21 — Brand identity</div>
+      <h2 class="ds-section__title">Positioning guardrails</h2>
+      <p class="ds-section__desc">Run every piece of content through these four before publishing.</p>
+      <div class="guardrail-grid">
+        <div class="guardrail">
+          <div class="guardrail__check">Systemic, not reactive</div>
+          <div class="guardrail__desc">Human impact on work, society, education. Not launches or news cycles.</div>
+        </div>
+        <div class="guardrail">
+          <div class="guardrail__check">Realist, not evangelist</div>
+          <div class="guardrail__desc">No hype. No uncritical celebration. Emotional dimensions are our edge.</div>
+        </div>
+        <div class="guardrail">
+          <div class="guardrail__check">Human first</div>
+          <div class="guardrail__desc">Technology is context. The human experience is the subject.</div>
+        </div>
+        <div class="guardrail">
+          <div class="guardrail__check">No political commentary</div>
+          <div class="guardrail__desc">Systemic discussion, not partisan reaction.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // Highlight active sidebar link on scroll
+    const sections = document.querySelectorAll('.ds-section');
+    const links = document.querySelectorAll('.sidebar__link');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('is-active'));
+          const active = document.querySelector('.sidebar__link[href="#' + e.target.id + '"]');
+          if (active) active.classList.add('is-active');
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    sections.forEach(s => obs.observe(s));
+  </script>
+</body>
+</html>
