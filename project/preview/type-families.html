@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <style>
+    html,body{margin:0;background:var(--bg-1);font-family:var(--font-body);padding:22px 28px;}
+    .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
+    .cell{padding:14px 18px;border:1px solid var(--border);border-radius:var(--radius-md);}
+    .name{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);margin-bottom:10px;}
+    .spartan{font-family:var(--font-display);font-weight:800;font-size:32px;letter-spacing:-0.02em;color:var(--hfh-blue);line-height:1;}
+    .public{font-family:'Public Sans',sans-serif;font-weight:400;font-size:18px;color:var(--fg-1);line-height:1.3;}
+    .inter{font-family:'Inter',sans-serif;font-weight:400;font-size:18px;color:var(--fg-1);line-height:1.3;}
+    .tag{display:inline-block;margin-top:10px;font-family:var(--font-mono);font-size:10px;color:var(--fg-3);}
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="cell">
+      <div class="name">League Spartan · display</div>
+      <div class="spartan">Realists,<br>not evangelists.</div>
+      <div class="tag">web · decks · social</div>
+    </div>
+    <div class="cell">
+      <div class="name">Public Sans · body (web)</div>
+      <div class="public">Warm but not fluffy. Hard topics, honestly.</div>
+      <div class="tag">web UI · body · labels</div>
+    </div>
+    <div class="cell">
+      <div class="name">Inter · documents</div>
+      <div class="inter">Warm but not fluffy. Hard topics, honestly.</div>
+      <div class="tag">DOCX · email · PDF</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <style>
+    html,body{margin:0;background:var(--surface-2);font-family:var(--font-body);padding:20px 24px;}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .card{border-radius:var(--radius-md);padding:16px 18px;transition:transform 200ms,box-shadow 200ms;position:relative;overflow:hidden;}
+    .card:hover{transform:translateY(-2px);}
+    .eyebrow{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+    .ttl{font-family:var(--font-display);font-weight:700;font-size:20px;line-height:1.15;letter-spacing:-0.01em;margin:0 0 6px;text-wrap:balance;}
+    .desc{font-size:13.5px;line-height:1.5;}
+    .meta{display:flex;gap:14px;font-size:12px;margin-top:10px;}
+    .meta span{display:inline-flex;align-items:center;gap:8px;}
+    .meta span::before{content:"";width:5px;height:5px;border-radius:50%;}
+
+    /* White (default) */
+    .white{background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-1);}
+    .white .eyebrow{color:var(--hfh-orange);}
+    .white .ttl{color:var(--hfh-blue);}
+    .white .desc,.white .meta{color:var(--fg-3);}
+    .white .meta span::before{background:var(--hfh-teal);}
+
+    /* Grey */
+    .grey{background:var(--surface-2);border:1px solid var(--border);}
+    .grey .eyebrow{color:var(--hfh-orange);}
+    .grey .ttl{color:var(--hfh-blue);}
+    .grey .desc,.grey .meta{color:var(--fg-3);}
+    .grey .meta span::before{background:var(--hfh-teal);}
+
+    /* Blue (anchor) */
+    .blue{background:#1B4A9B;color:#fff;}
+    .blue .eyebrow{color:#52CBBE;}
+    .blue .ttl{color:#fff;}
+    .blue .desc,.blue .meta{color:#BEEAE5;}
+    .blue .meta span::before{background:#FF6D4D;}
+
+    /* Teal (support) */
+    .teal{background:#52CBBE;color:#0B1420;}
+    .teal .eyebrow{color:#1B4A9B;}
+    .teal .ttl{color:#0F2E63;}
+    .teal .desc,.teal .meta{color:#0B1420;}
+    .teal .meta span::before{background:#1B4A9B;}
+
+    /* Orange (accent — use once per screen) */
+    .orange{background:#FF6D4D;color:#fff;}
+    .orange .eyebrow{color:#0F2E63;}
+    .orange .ttl{color:#fff;}
+    .orange .desc,.orange .meta{color:#fff;}
+    .orange .meta span::before{background:#fff;}
+
+    /* Purple (supporting) */
+    .purple{background:#5E17EB;color:#fff;}
+    .purple .eyebrow{color:#52CBBE;}
+    .purple .ttl{color:#fff;}
+    .purple .desc,.purple .meta{color:#BEEAE5;}
+    .purple .meta span::before{background:#FF6D4D;}
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="card white">
+      <div class="eyebrow">Programme</div>
+      <h3 class="ttl">Educate the Educator</h3>
+      <div class="desc">A structured AI literacy track for teachers and parents who want practical ground to stand on.</div>
+      <div class="meta"><span>6 weeks</span><span>Berlin + online</span></div>
+    </div>
+    <div class="card grey">
+      <div class="eyebrow">Event · 12 Nov</div>
+      <h3 class="ttl">The realist's guide to classroom AI</h3>
+      <div class="desc">An evening with practitioners from Berlin, Munich and Hamburg. No demos. No hype.</div>
+      <div class="meta"><span>Workshop</span><span>38 seats left</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="eyebrow">Flagship</div>
+      <h3 class="ttl">Nobody is left behind.</h3>
+      <div class="desc">A six-week programme for teachers in Germany — structured support, honest answers.</div>
+      <div class="meta"><span>2026 cohort</span><span>Applications open</span></div>
+    </div>
+    <div class="card teal">
+      <div class="eyebrow">Practitioner circle</div>
+      <h3 class="ttl">Thinking alongside, not at.</h3>
+      <div class="desc">Small-group sessions for people working on AI inside their organisation.</div>
+      <div class="meta"><span>Monthly</span><span>Closed group</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="eyebrow">Pull quote</div>
+      <h3 class="ttl">One highlight. Not ten.</h3>
+      <div class="desc">Use orange cards sparingly — one per screen, for the single thing you want people to remember.</div>
+      <div class="meta"><span>Accent only</span></div>
+    </div>
+    <div class="card purple">
+      <div class="eyebrow">Long-form</div>
+      <h3 class="ttl">Essays and field notes.</h3>
+      <div class="desc">Purple sits behind longer reads — systemic discussion, not partisan reaction.</div>
+      <div class="meta"><span>Substack</span><span>Weekly</span></div>
+    </div>
+  </div>
+</body>
+</html>

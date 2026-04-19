@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <style>
+    html,body{margin:0;background:var(--bg-1);font-family:var(--font-body);padding:22px 28px;}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .fld{display:flex;flex-direction:column;gap:6px;}
+    label{font-size:12px;font-weight:600;color:var(--fg-2);letter-spacing:0.02em;}
+    input,textarea,select{font-family:var(--font-body);font-size:15px;padding:11px 14px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:#fff;color:var(--fg-1);transition:border-color 160ms,box-shadow 160ms;}
+    input:focus,textarea:focus,select:focus{outline:0;border-color:var(--hfh-blue);box-shadow:0 0 0 3px color-mix(in oklab, var(--hfh-blue) 25%, transparent);}
+    .chk{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:14px;color:var(--fg-2);}
+    .chk input{width:18px;height:18px;accent-color:var(--hfh-blue);margin:0;padding:0;}
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="fld"><label>Your name</label><input placeholder="Kata Schmidt"></div>
+    <div class="fld"><label>Email</label><input placeholder="you@school.de"></div>
+    <div class="fld" style="grid-column:1/-1;"><label>What are you hoping to learn?</label><textarea rows="2" placeholder="We're thinking alongside you — a sentence or two helps us prepare."></textarea></div>
+  </div>
+  <div class="chk"><input type="checkbox" checked> I'd like the monthly reader — systemic, not reactive.</div>
+</body>
+</html>

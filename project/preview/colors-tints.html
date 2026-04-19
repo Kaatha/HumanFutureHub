@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <style>
+    html,body{margin:0;background:var(--bg-1);font-family:var(--font-body);}
+    .wrap{padding:18px 24px;display:grid;gap:10px;}
+    .row{display:flex;gap:0;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border);}
+    .step{flex:1;height:48px;position:relative;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;}
+    .lbl{width:68px;padding:0 14px;display:flex;align-items:center;font-size:12px;font-weight:600;color:var(--fg-2);}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div style="display:flex;align-items:center;">
+      <div class="lbl">Blue</div>
+      <div class="row" style="flex:1;">
+        <div class="step" style="background:#EEF3FB;color:#1B4A9B;">50</div>
+        <div class="step" style="background:#C5D5EE;color:#1B4A9B;">200</div>
+        <div class="step" style="background:#3A6FC2;color:#fff;">500</div>
+        <div class="step" style="background:#1B4A9B;color:#fff;">700</div>
+        <div class="step" style="background:#0F2E63;color:#fff;">900</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <div class="lbl">Teal</div>
+      <div class="row" style="flex:1;">
+        <div class="step" style="background:#ECF9F7;color:#2DA094;">50</div>
+        <div class="step" style="background:#BEEAE5;color:#2DA094;">200</div>
+        <div class="step" style="background:#52CBBE;color:#0B1420;">500</div>
+        <div class="step" style="background:#2DA094;color:#fff;">700</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <div class="lbl">Orange</div>
+      <div class="row" style="flex:1;">
+        <div class="step" style="background:#FFF1ED;color:#E04A28;">50</div>
+        <div class="step" style="background:#FFD2C5;color:#E04A28;">200</div>
+        <div class="step" style="background:#FF6D4D;color:#fff;">500</div>
+        <div class="step" style="background:#E04A28;color:#fff;">700</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

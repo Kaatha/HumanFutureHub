@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    html,body{margin:0;background:var(--bg-1);font-family:var(--font-body);padding:16px 20px;}
+    .row{display:flex;align-items:center;gap:16px;padding:10px 14px;border-radius:var(--radius-sm);margin-bottom:6px;}
+    .row svg{width:22px;height:22px;stroke-width:2;flex:none;}
+    .lbl{font-family:var(--font-mono);font-size:10.5px;flex:1;}
+    .name{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;width:100px;flex:none;}
+
+    /* Light surfaces */
+    .blue{color:var(--hfh-blue);}
+    .teal{color:var(--hfh-teal-700);}
+    .orange{color:var(--hfh-orange-700);}
+    .purple{color:var(--hfh-purple-500);}
+
+    /* Reversed — white icons on each brand surface */
+    .on-blue{background:#1B4A9B;color:#fff;}
+    .on-blue .name{color:#52CBBE;} .on-blue .lbl{color:#BEEAE5;}
+
+    .on-teal{background:#52CBBE;color:#0B1420;}
+    .on-teal .name{color:#1B4A9B;} .on-teal .lbl{color:#0B1420;}
+
+    .on-orange{background:#FF6D4D;color:#0F2E63;}
+    .on-orange .name{color:#0F2E63;} .on-orange .lbl{color:#0F2E63;}
+
+    .on-purple{background:#5E17EB;color:#fff;}
+    .on-purple .name{color:#52CBBE;} .on-purple .lbl{color:#BEEAE5;}
+
+    .note{margin-top:8px;font-size:11px;color:var(--fg-3);}
+  </style>
+</head>
+<body>
+  <div class="row blue"><div class="name">Blue</div><i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i><div class="lbl">primary</div></div>
+  <div class="row teal"><div class="name">Teal</div><i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i><div class="lbl">support</div></div>
+  <div class="row orange"><div class="name">Orange</div><i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i><div class="lbl">accent</div></div>
+  <div class="row purple"><div class="name">Purple</div><i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i><div class="lbl">long-form</div></div>
+  <div class="row on-blue"><div class="name">On blue</div><i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i><div class="lbl">reversed · white on blue</div></div>
+  <div class="row on-teal"><div class="name">On teal</div><i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i><div class="lbl">reversed · ink on teal</div></div>
+  <div class="row on-orange"><div class="name">On orange</div><i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i><div class="lbl">reversed · ink on orange</div></div>
+  <div class="row on-purple"><div class="name">On purple</div><i data-lucide="book-open"></i><i data-lucide="users"></i><i data-lucide="lightbulb"></i><i data-lucide="calendar"></i><i data-lucide="compass"></i><i data-lucide="message-circle"></i><i data-lucide="arrow-right"></i><i data-lucide="sparkles"></i><div class="lbl">reversed · white on purple</div></div>
+  <div class="note">Lucide · 2px outline · currentColor. Orange and teal reverse to dark ink for AAA legibility.</div>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
